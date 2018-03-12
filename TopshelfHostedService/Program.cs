@@ -19,13 +19,14 @@ namespace TopshelfHostedService
                     s.ConstructUsing(name => new TownCrier());
                     s.WhenStarted(tc => tc.Start());
                     s.WhenStopped(tc => tc.Stop());
+                    s.WhenShutdown(tc => tc.Dispose());
                 });
 
                 x.RunAsLocalSystem();
 
-                x.SetDescription("Sample Topshelf Host");
-                x.SetDisplayName("Stuff");
-                x.SetServiceName("Stuff");
+                x.SetDescription("TopshelfHostedService");
+                x.SetDisplayName("TopshelfHostedService");
+                x.SetServiceName("TopshelfHostedService");
 
                 x.UseLog4Net();
             });
