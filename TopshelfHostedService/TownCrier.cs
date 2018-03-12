@@ -4,7 +4,7 @@ using log4net;
 
 namespace TopshelfHostedService
 {
-    public class TownCrier
+    public class TownCrier : IDisposable
     {
         private static readonly ILog _log = LogManager.GetLogger(typeof(TownCrier));
 
@@ -44,6 +44,15 @@ namespace TopshelfHostedService
             lock (_lock)
             {
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
+        }
+
+        public void Dispose()
+        {
+            lock (_lock)
+            {
+                _log.Info("Disposing the town crier.");
+                _timer?.Dispose();
             }
         }
     }
